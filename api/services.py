@@ -10,24 +10,39 @@ connection_string = mydb[MONGO_COLLECTION_NAME]
 
 # { "query": {"identifier" : "bnr10010"} }
 #db.users.find({awards: {$elemMatch: {award:'National Medal', year:1975}}})
-def count_objects(query={}):
-    find = query["query"]
+def count_objects(query={},exact=True):
+    if exact == True:
+        find = query["query"]
+    else:
+        find = convert_exact_to_regex_query(query=query["query"])
     doc_count = connection_string.count_documents(find)
     return doc_count
-def mongo_obj_to_json(mongo_obj):
-    result = list(mongo_obj)
-    result_json = [ dict(i) for i in result]
-    result_final = []
-    for dict in result_json:
-        result_final.append(dict)
-    json_response = json.dumps(result_final)
-    return json_response
 
-def search_objects(query={}):
-    find = query["query"]
+def search_objects(query={},exact=True):
+    if exact == True:
+        find = query["query"]
+    else:
+        find = convert_exact_to_regex_query(query=query["query"])
     mongo_obj = connection_string.find(find)
     dict_result = {}
     for count,value in enumerate(mongo_obj):
         dict_result[f'{count}'] = value
     docs = json.loads(json_util.dumps(dict_result))
     return docs
+
+def convert_exact_to_regex_query(query):
+    new_query = {}
+    for key, value in query.items():
+        if isinstance(value, str): # if query is simple key value
+            new_query[key] = {"$regex": f".*{value}.*"}
+        elif isinstance(value, list):  # if query has operator at first
+            innernew_query={}
+            list_innernew_query=[]
+            for element in value:
+                innerkey=list(element.keys())[0]
+                innervalue=list(element.values())[0]
+                if isinstance(innervalue, str):
+                    innernew_query[innerkey] = {"$regex": f".*{innervalue}.*"}
+                list_innernew_query.append(innernew_query)
+            new_query[key] = list_innernew_query
+    return new_query
