@@ -2,7 +2,7 @@ from datetime import datetime
 from pymongo import MongoClient
 from archiveAPI.settings import MONGO_CON_STR,MONGO_DB_NAME,MONGO_COLLECTION_NAME
 import json
-from bson import json_util
+from bson import json_util,ObjectId
 
 client = MongoClient(MONGO_CON_STR)
 mydb = client[MONGO_DB_NAME]
@@ -46,3 +46,39 @@ def convert_exact_to_regex_query(query):
                 list_innernew_query.append(innernew_query)
             new_query[key] = list_innernew_query
     return new_query
+
+def search_range_objects(query):
+    start_hexadecimal = query["identifier"]
+    range = query["range"]
+    mongo_obj = connection_string.find({"_id": {"$gte": ObjectId(f'{start_hexadecimal}')}}).limit(range)
+    dict_result = {}
+    for count,value in enumerate(mongo_obj):
+        dict_result[f'{count}'] = value
+    docs = json.loads(json_util.dumps(dict_result))
+    return docs
+
+def delete_objects(query,exact=True):
+    if exact == True:
+        find = query["query"]
+    else:
+        find = convert_exact_to_regex_query(query=query["query"])
+    d = connection_string.delete_many(find)
+    dict_result = { "object_deleted_count" : f"{d.deleted_count}"}
+    docs = json.loads(json_util.dumps(dict_result))
+    return docs
+
+def delete_range_objects(query):
+    start_hexadecimal = query["identifier"]
+    range = query["range"]
+    docs_to_delete = connection_string.find({"_id": {"$gte": ObjectId(f'{start_hexadecimal}')}}).limit(range)
+    ids_to_delete = [doc["_id"] for doc in docs_to_delete]
+    for doc in ids_to_delete:
+        try:
+            connection_string.delete_one({"_id": doc})
+        except:
+            dict_result = {"object_deleted_ids": f"NO ID"}
+            docs = json.loads(json_util.dumps(dict_result))
+            return docs
+    dict_result = {"object_deleted_ids": f"{ids_to_delete}"}
+    docs = json.loads(json_util.dumps(dict_result))
+    return docs

@@ -1,5 +1,5 @@
 from django.urls import path ,include,re_path
-from api.views import ShowEntityCount ,ShowEntitySearch
+from api.views import ShowEntityCount ,ShowEntityJsonSearch ,DeleteEntityRangeDelete ,ShowEntityRangeSearch,DeleteEntityJsonDelete
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -20,6 +20,9 @@ urlpatterns = [
     path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path(r'^docs/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     path('show_entity/_count',ShowEntityCount.as_view()),
-    path('show_entity/_search', ShowEntitySearch.as_view()),
+    path('show_entity/json/_search', ShowEntityJsonSearch.as_view()),
+    path('show_entity/range/_search',ShowEntityRangeSearch.as_view()),
+    path('delete_entity/json/_delete',DeleteEntityJsonDelete.as_view()),
+    path('delete_entity/range/_delete', DeleteEntityRangeDelete.as_view()),
 ]
 
