@@ -82,3 +82,36 @@ def delete_range_objects(query):
     dict_result = {"object_deleted_ids": f"{ids_to_delete}"}
     docs = json.loads(json_util.dumps(dict_result))
     return docs
+
+def create_object(query):
+    object = query["query"]
+    requiered_keys = ["attachments","ocr_status","description","local_address","topics","identifier","collections"]
+    for key in requiered_keys:
+        if key not in object.keys():
+            return False
+        else:
+            pass
+    result = connection_string.insert_one(object)
+    new_id = result.inserted_id
+    dict_result = { "new_object_id" : f"{new_id}"}
+    docs = json.loads(json_util.dumps(dict_result))
+    return docs
+
+def update_object(query,exact=False):
+    update_query = {}
+    if exact == True:
+        find_query = query["find_query"]
+    else:
+        find_query = convert_exact_to_regex_query(query=query["find_query"])
+    user_update_query = query["update_query"]
+    update_query['$set'] = user_update_query
+    result = connection_string.update_many(find_query,update_query)
+    modified_ids = []
+    if result.modified_count > 0:
+        modified_documents = connection_string.find(find_query)
+        for doc in modified_documents:
+            modified_ids.append(doc['_id'])
+    dict_result = { "modified_object_id" : f"{modified_ids}"}
+    docs = json.loads(json_util.dumps(dict_result))
+    return docs
+
