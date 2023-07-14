@@ -1,6 +1,6 @@
 from datetime import datetime
 from pymongo import MongoClient
-from archiveAPI.settings import MONGO_CON_STR,MONGO_DB_NAME,MONGO_COLLECTION_NAME
+from archiveAPI.settings import DOMAIN_NAME,MONGO_CON_STR,MONGO_DB_NAME,MONGO_COLLECTION_NAME
 import json
 from bson import json_util,ObjectId
 
@@ -114,4 +114,28 @@ def update_object(query,exact=False):
     dict_result = { "modified_object_id" : f"{modified_ids}"}
     docs = json.loads(json_util.dumps(dict_result))
     return docs
+
+def get_img_info(entity,collection,pdf_name):
+    find = { 'identifier' : entity }
+    doc = connection_string.find(find)
+    option = {}
+    fields = [field for field in doc][0]
+    for attachment in fields["attachments"]:
+        if attachment['name'] == pdf_name:
+            bookTitle = attachment['name'] + '-' + attachment['caption']
+            thumbnail = attachment['thumbnail']
+            data = []
+            for counter,img in enumerate(attachment['files_inside']):
+                dics_info = {}
+                dics_info['width'] = img['width']
+                dics_info['height'] = img['height']
+                name_page = img['local_address'].split('/')[-1]
+                uri = '//' + DOMAIN_NAME + '/' + 'bookreader' + collection + '/' + entity + '/' + 'images' + '/' + name_page
+                dics_info['uri'] = uri
+                data.append([dics_info])
+    option['data'] = data
+    option['bookTitle'] = bookTitle
+    option['thumbnail'] = thumbnail
+    result_json = json.loads(json_util.dumps(option))
+    return result_json
 

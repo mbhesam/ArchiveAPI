@@ -4,7 +4,7 @@ from rest_framework.parsers import MultiPartParser,FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
-from api.services import delete_objects,update_object,count_objects,search_objects,search_range_objects,delete_range_objects,create_object
+from api.services import delete_objects,update_object,count_objects,search_objects,search_range_objects,delete_range_objects,create_object,get_img_info
 from api.serializers import JsonSearchSerializer, IdentifierRangeSerializer , UpdateSerializer
 from rest_framework import status
 from drf_yasg import openapi
@@ -113,7 +113,11 @@ class UpdateEntity(APIView):
             docs = update_object(query=data_query.validated_data)
         return Response(docs,status.HTTP_200_OK)
 
-
+class Bookreader(APIView):
+    @swagger_auto_schema()
+    def get(self,request,collection,entity,pdf_name):
+        result = get_img_info(entity=entity,collection=collection,pdf_name=pdf_name)
+        return Response(result,status.HTTP_200_OK)
 
 
 # class UploadEntity(APIView):
