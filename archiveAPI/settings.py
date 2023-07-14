@@ -65,7 +65,7 @@ ROOT_URLCONF = 'archiveAPI.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -135,3 +135,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MONGO_CON_STR = env("MONGO_CON_STR")
 MONGO_DB_NAME = env("MONGO_DB_NAME")
 MONGO_COLLECTION_NAME = env("MONGO_COLLECTION_NAME")
+DOMAIN_NAME = env("DOMAIN_NAME")
