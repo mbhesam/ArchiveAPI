@@ -27,7 +27,7 @@ def is_in_compressed(path):
 
 
 def get_absolute_file_path(relative_path):
-    return FILES_BASE_DIR / relative_path
+    return FILES_BASE_DIR +'/'+ relative_path
 
 
 def get_file_or_none(relative_path):

@@ -33,9 +33,6 @@ SECRET_KEY = 'django-insecure-v9#is=1*x#ouuwhkhv@*xa5=)(3qq1@+=ho-%ww4caz!w=@!((
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -137,3 +134,4 @@ MONGO_DB_NAME = env("MONGO_DB_NAME")
 MONGO_COLLECTION_NAME = env("MONGO_COLLECTION_NAME")
 DOMAIN_NAME = env("DOMAIN_NAME")
 FILES_BASE_DIR = env("FILES_BASE_DIR")
+ALLOWED_HOSTS=[env("ALLOWED_HOSTS")]
