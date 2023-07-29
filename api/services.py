@@ -18,14 +18,15 @@ def count_objects(query={},exact=True):
     doc_count = connection_string.count_documents(find)
     return doc_count
 
-def search_objects(query={},exact=True):
+def search_objects(query={},exact=True,page_number="1"):
     if exact == True:
         find = query["query"]
     else:
         find = convert_exact_to_regex_query(query=query["query"])
     mongo_obj = connection_string.find(find)
+    page_number = int(page_number)
     dict_result = {}
-    for count,value in enumerate(mongo_obj):
+    for count,value in enumerate(mongo_obj[(page_number-1)*5:page_number*5]):
         dict_result[f'{count}'] = value
     docs = json.loads(json_util.dumps(dict_result))
     return docs
@@ -47,12 +48,13 @@ def convert_exact_to_regex_query(query):
             new_query[key] = list_innernew_query
     return new_query
 
-def search_range_objects(query):
+def search_range_objects(query,page_number="1"):
     start_hexadecimal = query["identifier"]
     range = query["range"]
     mongo_obj = connection_string.find({"_id": {"$gte": ObjectId(f'{start_hexadecimal}')}}).limit(range)
+    page_number = int(page_number)
     dict_result = {}
-    for count,value in enumerate(mongo_obj):
+    for count,value in enumerate(mongo_obj[(page_number-1)*5:page_number*5]):
         dict_result[f'{count}'] = value
     docs = json.loads(json_util.dumps(dict_result))
     return docs
