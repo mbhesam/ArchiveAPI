@@ -29,30 +29,39 @@ class ShowEntityCount(APIView):
 
 class ShowEntityJsonSearch(APIView):
     exactmatch = openapi.Parameter('exactmatch', openapi.IN_QUERY,
-                                 description="field you want to order by to",
+                                 description="False for consistancy search",
                                  type=openapi.TYPE_STRING)
-    @swagger_auto_schema( request_body=JsonSearchSerializer,manual_parameters=[exactmatch])
+    page = openapi.Parameter('page', openapi.IN_QUERY,
+                                   description="field for return page by page",
+                                   type=openapi.TYPE_STRING)
+    @swagger_auto_schema( request_body=JsonSearchSerializer,manual_parameters=[exactmatch,page])
     def post(self,request):
         try:
             data_query = JsonSearchSerializer(data=request.data)
             data_query.is_valid(raise_exception=True)
         except:
             return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        if request.query_params.get("exactmatch",False) == "false":
-            objects = search_objects(query=data_query.validated_data,exact=False)
+        exactmatch = request.query_params.get("exactmatch", False)
+        page = request.query_params.get("page")
+        if exactmatch == "false":
+            objects = search_objects(query=data_query.validated_data,exact=False,page_number=page)
         else:
-            objects = search_objects(query=data_query.validated_data)
+            objects = search_objects(query=data_query.validated_data,page_number=page)
         return Response(objects, status=status.HTTP_200_OK)
 
 class ShowEntityRangeSearch(APIView):
-    @swagger_auto_schema(request_body=IdentifierRangeSerializer)
+    page = openapi.Parameter('page', openapi.IN_QUERY,
+                                   description="field for return page by page",
+                                   type=openapi.TYPE_STRING)
+    @swagger_auto_schema(request_body=IdentifierRangeSerializer,manual_parameters=[page])
     def post(self,request):
         try:
             data_query = IdentifierRangeSerializer(data=request.data)
             data_query.is_valid(raise_exception=True)
         except:
             return Response(status=status.HTTP_422_UNPROCESSABLE_ENTITY)
-        objects = search_range_objects(data_query.validated_data)
+        page = request.query_params.get("page")
+        objects = search_range_objects(data_query.validated_data,page_number=page)
         return Response(objects,status.HTTP_200_OK)
 
 class DeleteEntityJsonDelete(APIView):
