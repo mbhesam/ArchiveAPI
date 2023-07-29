@@ -132,12 +132,15 @@ def get_img_info(entity,collection,pdf_name):
                 dics_info['width'] = img['width']
                 dics_info['height'] = img['height']
                 name_page = img['local_address'].split('/')[-1]
-                uri = '//' + DOMAIN_NAME + '/' + 'bookreader' + collection + '/' + entity + '/' + 'images' + '/' + name_page
+                uri = DOMAIN_NAME + '/' + 'bookreader' + collection + '/' + entity + '/' + 'images' + '/' + name_page
                 dics_info['uri'] = uri
                 data.append([dics_info])
-    option['data'] = data
-    option['bookTitle'] = bookTitle
-    option['thumbnail'] = thumbnail
-    result_json = json.loads(json_util.dumps(option))
+    try:
+        option['data'] = data
+        option['bookTitle'] = bookTitle
+        option['thumbnail'] = thumbnail
+        result_json = json.loads(json_util.dumps(option))
+    except:
+        result_json = {}
     return result_json
 
