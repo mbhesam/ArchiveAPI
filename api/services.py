@@ -144,3 +144,6 @@ def get_img_info(entity,collection,pdf_name):
         result_json = {}
     return result_json
 
+
+
+
