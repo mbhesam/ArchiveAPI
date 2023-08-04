@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'download',
+    'tasks',
+    'django_celery_beat',
+    'django_celery_results',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -132,8 +135,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MONGO_CON_STR = env("MONGO_CON_STR")
 MONGO_DB_NAME = env("MONGO_DB_NAME")
-MONGO_COLLECTION_NAME = env("MONGO_COLLECTION_NAME")
+MONGO_DATA_COLLECTION_NAME = env("MONGO_DATA_COLLECTION_NAME")
 DOMAIN_NAME = env("DOMAIN_NAME")
 FILES_BASE_DIR = env("FILES_BASE_DIR")
 ALLOWED_HOSTS=[env("ALLOWED_HOSTS")]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+CELERY_BROKER_URL = env("CELERY_BROKER_URL")
