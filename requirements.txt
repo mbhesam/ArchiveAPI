@@ -3,7 +3,6 @@ django_environ==0.10.0
 djangorestframework==3.14.0
 drf_yasg==1.21.5
 filetype==1.2.0
-Pillow==9.4.0
 Pillow==10.0.0
 pymongo==4.3.3
 PyMuPDF==1.22.5
