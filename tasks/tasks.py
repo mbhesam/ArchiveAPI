@@ -1,4 +1,4 @@
-from tasks_utils import create_update
+from tasks.tasks_utils import create_update
 
 def scheduled_task_run():
     check_task_execution()
