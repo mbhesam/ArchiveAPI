@@ -1,6 +1,5 @@
 import os
 from celery import Celery
-from tasks_utils import create_update
 from celery.schedules import crontab
 from archiveAPI.settings import CELERY_BROKER_URL
 
