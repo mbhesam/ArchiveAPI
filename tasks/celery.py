@@ -11,7 +11,7 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     'run-task-every-day': {
-        'task': 'tasks.scheduled_task_run',
+        'task': 'scheduled_task_run',
         'schedule': crontab(hour='1-23', minute='0', day_of_week='*'),
     },
 }
