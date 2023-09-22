@@ -24,7 +24,7 @@ def get_unimaged_pdf():
     pdf_names = []
     attachments_list = mongo_objects["attachments"]
     for attachment in attachments_list:
-        pdf_names.append(attachment["local_address"]+attachment["name"])
+        pdf_names.append(attachment["local_address"])
     return pdf_names
 
 def create_image_dir(pdf):
