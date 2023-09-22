@@ -38,7 +38,7 @@ def create_pdf_img(): # create pdf images and return count of pages
     name_page = {}
     #open your file
     for pdf in pdf_full_path:
-        pdf_name = pdf_full_path.split("/")[-1]
+        pdf_name = pdf.split("/")[-1]
         create_image_dir(pdf)
         doc = fitz.open(pdf)
         #iterate through the pages of the document and create a RGB image of the page
