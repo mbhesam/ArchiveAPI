@@ -29,7 +29,7 @@ def get_unimaged_pdf():
 
 def create_image_dir(pdf):
     try:
-        os.mkdir(f'{pdf}_files')
+        os.makedirs(f'{pdf}_files')
     except FileExistsError:
         pass
 
