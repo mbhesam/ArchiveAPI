@@ -8,6 +8,8 @@ from api.services import delete_objects,update_object,count_objects,search_objec
 from api.serializers import JsonSearchSerializer, IdentifierRangeSerializer , UpdateSerializer
 from rest_framework import status
 from drf_yasg import openapi
+from django.http import JsonResponse
+from tasks.tasks import bookreader_run_task
 
 class ShowEntityCount(APIView):
     exactmatch = openapi.Parameter('exactmatch', openapi.IN_QUERY,
@@ -127,6 +129,17 @@ class Bookreader(APIView):
     def get(self,request,collection,entity,pdf_name):
         result = get_img_info(entity=entity,collection=collection,pdf_name=pdf_name)
         return Response(result,status.HTTP_200_OK)
+
+
+
+def bookreader_api_view(request):
+    # param1 = request.POST.get('param1')
+    # param2 = request.POST.get('param2')
+
+    # result = bookreader_run_task.delay(param1, param2)
+    result = bookreader_run_task.delay()
+
+    return JsonResponse({'message': 'Task queued', 'task_id': result.id})
 
 
 # class UploadEntity(APIView):
