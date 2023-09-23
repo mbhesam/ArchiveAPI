@@ -58,7 +58,7 @@ def update_db(name_page):
     for index ,path in enumerate(pathes):
         name = path.split("/")[-1]
         images = []
-        for page_number in range(page_counts):
+        for page_number in range(len(page_counts)):
             image_object = {}
             meta = get_image_meta(f"{path}_files/{name.strip('.pdf')}-page-{page_number}")
             image_object["width"] = meta["width"]
