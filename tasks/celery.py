@@ -9,9 +9,4 @@ app = Celery('archiveAPI',broker=CELERY_BROKER_URL)
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks(INSTALLED_APPS)
 
-# app.conf.beat_schedule = {
-#     'run-task-every-day': {
-#         'task': 'tasks.tasks.scheduled_task_run',
-#         'schedule': crontab(hour='1-23', minute='0', day_of_week='*'),
-#     },
-# }
+
