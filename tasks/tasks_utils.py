@@ -60,10 +60,10 @@ def update_db(name_page):
         images = []
         for page_number in range(page_counts):
             image_object = {}
-            meta = get_image_meta(f"{path}_files/{name.strip('.pdf')}-page-{page_number}")
+            meta = get_image_meta(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg")
             image_object["width"] = meta["width"]
             image_object["height"] = meta["height"]
-            image_object["local_address"] = f"{path}_files/{name.strip('.pdf')}-page-{page_number}"
+            image_object["local_address"] = f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg"
             images.append(image_object)
         search = {"attachments.name": name}
         update = {
