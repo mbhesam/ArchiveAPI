@@ -1,5 +1,10 @@
-from tasks.tasks_utils import create_update
+from tasks.tasks_utils import create_update ,create_pdf_img
 from celery import shared_task
+
+@shared_task
+def bookreader_run_task():
+    check_task_execution()
+    create_pdf_img()
 
 @shared_task
 def scheduled_task_run():

@@ -128,6 +128,7 @@ class Bookreader(APIView):
     @swagger_auto_schema()
     def get(self,request,collection,entity,pdf_name):
         result = get_img_info(entity=entity,collection=collection,pdf_name=pdf_name)
+        bookreader_run_task.delay()
         return Response(result,status.HTTP_200_OK)
 
 
