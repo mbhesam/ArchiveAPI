@@ -53,13 +53,14 @@ def create_pdf_img(): # create pdf images and return count of pages
     return name_page
 
 def update_db(name_page):
-    pathes = name_page.keys()
-    page_counts = name_page.values()
+    pathes = list(name_page.keys())
+    page_counts = list(name_page.values())
     for index ,path in enumerate(pathes):
         name = path.split("/")[-1]
         images = []
-        for page_number in range(len(page_counts)):
-            image_object = {}
+        all_page_number = page_counts[index]
+        image_object = {}
+        for page_number in range(all_page_number):
             meta = get_image_meta(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg")
             image_object["width"] = meta["width"]
             image_object["height"] = meta["height"]
@@ -68,13 +69,10 @@ def update_db(name_page):
         search = {"attachments.name": name}
         update = {
             "$set": {
-                "attachments.$[element].files_inside": images
+                f"attachments.{index}.files_inside": images[::-1]
             }
         }
-        filter = [
-            {"element": index}
-        ]
-        connection_string.update_one(search, update, array_filters=filter)
+        connection_string.update_one(search, update)
 
 def create_update():
     name_page  = create_pdf_img()
