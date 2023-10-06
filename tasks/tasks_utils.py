@@ -61,6 +61,7 @@ def update_db(name_page):
         all_page_number = page_counts[index]
         image_object = {}
         for page_number in range(all_page_number):
+            image_object = {}
             meta = get_image_meta(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg")
             image_object["width"] = meta["width"]
             image_object["height"] = meta["height"]
