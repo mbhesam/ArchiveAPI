@@ -27,6 +27,31 @@ def get_unimaged_pdf():
         pdf_names.append(attachment["local_address"])
     return pdf_names
 
+
+def get_imaged_pdf():
+    mongo_objects = connection_string.find({"attachments.files_inside": {"$ne":[]}})
+    pdf_names_count = {}
+
+    for obj in mongo_objects:
+        attachments_list = obj["attachments"]
+        for attachment in attachments_list:
+            full_path = attachment["local_address"]
+            doc = fitz.open(full_path)
+            page_count=doc.page_count
+            pdf_names_count[full_path] = page_count
+    return pdf_names_count
+
+def delete_extra_image():
+    pdf_names_count = get_imaged_pdf()
+    full_path = list(pdf_names_count.keys())
+    page_counts = list(pdf_names_count.values())
+    for path , count in zip(full_path,page_counts):
+        name = path.split("/")[-1]
+        for page_number in range(11,count):
+            os.remove(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg")
+
+
+
 def create_image_dir(pdf):
     try:
         os.makedirs(f'{pdf}_files')
@@ -76,6 +101,5 @@ def update_db(name_page):
         connection_string.update_one(search, update)
 
 def create_update():
-    name_page  = create_pdf_img()
+    name_page = create_pdf_img()
     update_db(name_page)
-
