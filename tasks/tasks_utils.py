@@ -3,6 +3,7 @@ from PIL import Image
 from archiveAPI.settings import MONGO_DATA_COLLECTION_NAME,MONGO_CON_STR,MONGO_DB_NAME
 from pymongo import MongoClient
 import fitz
+from archiveAPI.settings import LOGGER
 
 client = MongoClient(MONGO_CON_STR)
 mydb = client[MONGO_DB_NAME]
@@ -65,7 +66,10 @@ def create_pdf_img(): # create pdf images and return count of pages
     for pdf in pdf_full_path:
         pdf_name = pdf.split("/")[-1]
         create_image_dir(pdf)
-        doc = fitz.open(pdf)
+        try:
+            doc = fitz.open(pdf)
+        except Exception as Ex:
+            LOGGER.error(msg=f"[pdf][Ex]")
         #iterate through the pages of the document and create a RGB image of the page
         page_count = 0
         for page in doc:
@@ -84,7 +88,6 @@ def update_db(name_page):
         name = path.split("/")[-1]
         images = []
         all_page_number = page_counts[index]
-        image_object = {}
         for page_number in range(all_page_number):
             image_object = {}
             meta = get_image_meta(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg")
@@ -99,6 +102,7 @@ def update_db(name_page):
             }
         }
         connection_string.update_one(search, update)
+        LOGGER.info(msg=f"[{name} attachments.files_inside updated][{path}]")
 
 def create_update():
     name_page = create_pdf_img()

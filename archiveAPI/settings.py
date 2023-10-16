@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import environ
 import os
+import logging
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 env = environ.Env(
@@ -131,6 +132,12 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+
+logging.basicConfig(filename=f"{BASE_DIR}/logs/django.log",
+                    format='%(asctime)s %(message)s',
+                    filemode='w')
+LOGGER = logging.getLogger()
+LOGGER.setLevel(logging.DEBUG)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MONGO_CON_STR = env("MONGO_CON_STR")
