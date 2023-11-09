@@ -9,7 +9,7 @@ from api.serializers import JsonSearchSerializer, IdentifierRangeSerializer , Up
 from rest_framework import status
 from drf_yasg import openapi
 from django.http import JsonResponse
-from tasks.tasks import bookreader_run_task
+from tasks.tasks import bookreader_api_call_task
 
 class ShowEntityCount(APIView):
     exactmatch = openapi.Parameter('exactmatch', openapi.IN_QUERY,
@@ -128,7 +128,7 @@ class Bookreader(APIView):
     @swagger_auto_schema()
     def get(self,request,collection,entity,pdf_name):
         result = get_img_info(entity=entity,collection=collection,pdf_name=pdf_name)
-        bookreader_run_task.delay()
+        bookreader_api_call_task.delay()
         return Response(result,status.HTTP_200_OK)
 
 

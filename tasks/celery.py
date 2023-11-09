@@ -12,7 +12,7 @@ app.autodiscover_tasks(INSTALLED_APPS)
 
 app.conf.beat_schedule = {
     'run-task-every-hour': {
-        'task': 'tasks.tasks.scheduled_task_run',
+        'task': 'tasks.tasks.scheduled_create_update_image',
         'schedule': crontab(hour='1-23', minute='0', day_of_week='*'),
     },
     'run-task-every-day': {

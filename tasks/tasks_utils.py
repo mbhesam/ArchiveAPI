@@ -51,8 +51,6 @@ def delete_extra_image():
         for page_number in range(11,count):
             os.remove(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg")
 
-
-
 def create_image_dir(pdf):
     try:
         os.makedirs(f'{pdf}_files')
@@ -69,7 +67,7 @@ def create_pdf_img(): # create pdf images and return count of pages
         try:
             doc = fitz.open(pdf)
         except Exception as Ex:
-            LOGGER.error(msg=f"[pdf][Ex]")
+            LOGGER.error(msg=f"[pdf][{Ex}]")
         #iterate through the pages of the document and create a RGB image of the page
         page_count = 0
         for page in doc:
