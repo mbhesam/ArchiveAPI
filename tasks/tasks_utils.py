@@ -4,7 +4,7 @@ from archiveAPI.settings import MONGO_DATA_COLLECTION_NAME,MONGO_CON_STR,MONGO_D
 from pymongo import MongoClient
 import fitz
 from archiveAPI.settings import LOGGER
-
+import subprocess
 client = MongoClient(MONGO_CON_STR)
 mydb = client[MONGO_DB_NAME]
 connection_string = mydb[MONGO_DATA_COLLECTION_NAME]
@@ -30,17 +30,25 @@ def get_unimaged_pdf():
 
 
 def get_imaged_pdf():
-    mongo_objects = connection_string.find({"attachments.files_inside": {"$ne":[]}})
+    output_os = subprocess.check_output(["find", "/archive","-name","'*-page-12.jpeg'"], text=True)
+    lines = output_os.split("\n")
+    for line in lines[:-1]:
+        entity = line.split("/")[3]
+    mongo_objects = connection_string.find({"identifier": entity})
     pdf_names_count = {}
-
     for obj in mongo_objects:
         attachments_list = obj["attachments"]
         for attachment in attachments_list:
             full_path = attachment["local_address"]
-            doc = fitz.open(full_path)
-            page_count=doc.page_count
-            pdf_names_count[full_path] = page_count
+            try:
+                doc = fitz.open(full_path)
+                page_count = doc.page_count
+                pdf_names_count[full_path] = page_count
+            except Exception as Ex:
+                LOGGER.error(msg=f"[{full_path}][{Ex}]")
+                return {}
     return pdf_names_count
+
 
 def delete_extra_image():
     pdf_names_count = get_imaged_pdf()
@@ -67,7 +75,7 @@ def create_pdf_img(): # create pdf images and return count of pages
         try:
             doc = fitz.open(pdf)
         except Exception as Ex:
-            LOGGER.error(msg=f"[pdf][{Ex}]")
+            LOGGER.error(msg=f"[{pdf_full_path}][{Ex}]")
         #iterate through the pages of the document and create a RGB image of the page
         page_count = 0
         for page in doc:
