@@ -32,11 +32,10 @@ def get_unimaged_pdf():
 def get_imaged_pdf():
     output_os = subprocess.check_output(["find", "/archive","-name","'*-page-12.jpeg'"], text=True)
     lines = output_os.split("\n")
+    pdf_names_count = {}
     for line in lines[:-1]:
         entity = line.split("/")[3]
-    mongo_objects = connection_string.find({"identifier": entity})
-    pdf_names_count = {}
-    for obj in mongo_objects:
+        obj = connection_string.find({"identifier": entity})
         attachments_list = obj["attachments"]
         for attachment in attachments_list:
             full_path = attachment["local_address"]
