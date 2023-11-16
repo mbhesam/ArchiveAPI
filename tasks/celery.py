@@ -17,7 +17,7 @@ app.conf.beat_schedule = {
     },
     'run-task-every-day': {
         'task': 'tasks.tasks.scheduled_delete_pdf_img',
-        'schedule': crontab(hour='1-23', minute='15', day_of_week='*'),
+        'schedule': crontab(hour='1', minute='0', day_of_week='*'),
     },
 }
 
