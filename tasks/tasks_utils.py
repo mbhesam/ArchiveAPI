@@ -34,18 +34,13 @@ def get_imaged_pdf():
     lines = output_os.split("\n")
     pdf_names_count = {}
     for line in lines[:-1]:
-        entity = line.split("/")[3]
-        obj = connection_string.find({"identifier": entity})
-        attachments_list = obj["attachments"]
-        for attachment in attachments_list:
-            full_path = attachment["local_address"]
-            try:
-                doc = fitz.open(full_path)
-                page_count = doc.page_count
-                pdf_names_count[full_path] = page_count
-            except Exception as Ex:
-                LOGGER.error(msg=f"[{full_path}][{Ex}]")
-                return {}
+        try:
+            doc = fitz.open(line)
+            page_count = doc.page_count
+            pdf_names_count[line] = page_count
+        except Exception as Ex:
+            LOGGER.error(msg=f"[{line}][{Ex}]")
+            return {}
     return pdf_names_count
 
 
