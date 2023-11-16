@@ -30,7 +30,7 @@ def get_unimaged_pdf():
 
 
 def get_imaged_pdf():
-    output_os = subprocess.check_output(["find", "/archive","-name","'*-page-12.jpeg'"], text=True)
+    output_os = subprocess.check_output(["find", "/archive","-name","*-page-12.jpeg"], text=True)
     lines = output_os.split("\n")
     pdf_names_count = {}
     for line in lines[:-1]:
