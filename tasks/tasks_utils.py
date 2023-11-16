@@ -57,7 +57,7 @@ def delete_extra_image():
         name = path.split("/")[-1]
         for page_number in range(11,count):
             os.remove(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg")
-
+            LOGGER.info(f"[{full_path}][deleted pages 11 to end]")
 def create_image_dir(pdf):
     try:
         os.makedirs(f'{pdf}_files')
