@@ -84,7 +84,7 @@ def create_pdf_img(): # create pdf images and return count of pages
             pix = page.get_pixmap()
             pix.save(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-%i.jpeg" % page.number)
             if page.number == '0' :
-                os.rename(f"{pdf_name.strip('.pdf')}-page-0.jpeg",f"{pdf_name.strip('.pdf')}_thumb.jpeg",f"{pdf}_files/",f"{pdf}_files/")
+                os.rename(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-0.jpeg",f"{pdf}_files/{pdf_name.strip('.pdf')}_thumb.jpeg")
             page_count = page_count + 1
         name_page[f'{pdf}'] = page_count
     return name_page
@@ -104,13 +104,36 @@ def update_db(name_page):
             image_object["local_address"] = f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg"
             images.append(image_object)
         search = {"attachments.name": name}
-        update = {
+        update_files_inside = {
             "$set": {
                 f"attachments.{index}.files_inside": images[::-1]
             }
         }
-        connection_string.update_one(search, update)
-        LOGGER.info(msg=f"[{name} attachments.files_inside updated][{path}]")
+        update_thumbnail = {
+            "$set": {
+                f"attachments.{index}.thumbnail": f"{path}_files/{name.strip('.pdf')}_thumb.jpeg"
+            }
+        }
+        update_pdf_page_count = {
+            "$set": {
+                f"attachments.{index}.pdf_page_number": page_counts[index]
+            }
+        }
+        try:
+            connection_string.update_one(search, update_files_inside)
+            LOGGER.info(msg=f"[{name} attachments.files_inside updated][{path}]")
+        except Exception as EX:
+            LOGGER.error(msg=f"[{name} attachments.files_inside not updated due to Exception][{EX}]")
+        try:
+            connection_string.update_one(search, update_thumbnail)
+            LOGGER.info(msg=f"[{name} attachments.thumbnail updated][{path}]")
+        except Exception as EX:
+            LOGGER.error(msg=f"[{name} attachments.thumbnail not updated due to Exception][{EX}]")
+        try:
+            connection_string.update_one(search, update_pdf_page_count)
+            LOGGER.info(msg=f"[{name} attachments.pdf_page_count updated][{path}]")
+        except Exception as EX:
+            LOGGER.error(msg=f"[{name} attachments.pdf_page_count not updated due to Exception][{EX}]")
 
 def create_update():
     name_page = create_pdf_img()
