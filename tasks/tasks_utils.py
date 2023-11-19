@@ -21,7 +21,7 @@ def get_image_meta(img):
     }
 
 def get_unimaged_pdf():
-    mongo_objects = connection_string.find({"attachments.files_inside": [],"attachments.type": {"$eq": "pdf"}})[0]
+    mongo_objects = connection_string.find({"attachments": {"$elemMatch": {"files_inside": [],"type": "pdf"}}})[0]
     pdf_names = []
     attachments_list = mongo_objects["attachments"]
     for attachment in attachments_list:
