@@ -71,7 +71,7 @@ def create_pdf_img(path=None): # create pdf images and return count of pages
     if path == None: # logically it means database should be updated
         pdf_full_path = get_unimaged_pdf()
     else:            # logically it means it should just create images for pdf due to api_call_task
-        pdf_full_path = path
+        pdf_full_path = [path]
     name_page = {}
     #open your file
     for pdf in pdf_full_path:
