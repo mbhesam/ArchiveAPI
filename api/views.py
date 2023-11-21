@@ -7,6 +7,7 @@ from rest_framework.decorators import action
 from api.services import delete_objects,update_object,count_objects,search_objects,search_range_objects,delete_range_objects,create_object,get_img_info
 from api.serializers import JsonSearchSerializer, IdentifierRangeSerializer , UpdateSerializer
 from rest_framework import status
+from archiveAPI.settings import FILES_BASE_DIR
 from drf_yasg import openapi
 from django.http import JsonResponse
 from tasks.tasks import bookreader_api_call_task
@@ -127,8 +128,9 @@ class UpdateEntity(APIView):
 class Bookreader(APIView):
     @swagger_auto_schema()
     def get(self,request,collection,entity,pdf_name):
+        pdf_path = f"{FILES_BASE_DIR}/{collection}/{entity}/{pdf_name}"
+        bookreader_api_call_task.delay(path=pdf_path)
         result = get_img_info(entity=entity,collection=collection,pdf_name=pdf_name)
-        bookreader_api_call_task.delay()
         return Response(result,status.HTTP_200_OK)
 
 

@@ -3,9 +3,9 @@ from celery import shared_task
 from datetime import datetime
 time_date = datetime.now()
 @shared_task
-def bookreader_api_call_task():
+def bookreader_api_call_task(path):
     check_task_execution(bookreader_api_call_task)
-    create_pdf_img()
+    create_pdf_img(path=path)
 
 @shared_task
 def scheduled_create_update_image():
