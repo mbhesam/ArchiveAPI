@@ -39,6 +39,7 @@ DEBUG = True
 INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework',
+    'corsheaders',
     'api',
     'download',
     'tasks',
@@ -56,6 +57,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -132,6 +134,8 @@ STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 logging.basicConfig(filename=f"{BASE_DIR}/logs/django.log",
                     format='%(asctime)s %(message)s',
