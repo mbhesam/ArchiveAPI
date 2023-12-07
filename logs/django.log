@@ -1,0 +1,7 @@
+2023-11-23 10:49:50,962 get 'MONGO_CON_STR' casted as 'None' with default '<NoValue>'
+2023-11-23 10:49:50,962 get 'MONGO_DB_NAME' casted as 'None' with default '<NoValue>'
+2023-11-23 10:49:50,962 get 'MONGO_DATA_COLLECTION_NAME' casted as 'None' with default '<NoValue>'
+2023-11-23 10:49:50,962 get 'DOMAIN_NAME' casted as 'None' with default '<NoValue>'
+2023-11-23 10:49:50,962 get 'FILES_BASE_DIR' casted as 'None' with default '<NoValue>'
+2023-11-23 10:49:50,962 get 'ALLOWED_HOSTS' casted as 'None' with default '<NoValue>'
+2023-11-23 10:49:50,962 get 'CELERY_BROKER_URL' casted as 'None' with default '<NoValue>'

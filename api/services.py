@@ -125,14 +125,14 @@ def get_img_info(entity,collection,pdf_name):
     for attachment in fields["attachments"]:
         if attachment['name'] == pdf_name:
             bookTitle = attachment['name'] + '-' + attachment['caption']
-            thumbnail = attachment['thumbnail']
+            thumbnail = DOMAIN_NAME + "/" + attachment['thumbnail'].strip("/archive/")
             data = []
             for counter,img in enumerate(attachment['files_inside']):
                 dics_info = {}
                 dics_info['width'] = img['width']
                 dics_info['height'] = img['height']
                 name_page = img['local_address'].split('/')[-1]
-                uri = DOMAIN_NAME + '/' + 'bookreader' + collection + '/' + entity + '/' + 'images' + '/' + name_page
+                uri = DOMAIN_NAME + "/download/" + collection + '/' + entity + '/' + 'images' + '/' + name_page
                 dics_info['uri'] = uri
                 data.append([dics_info])
     try:
