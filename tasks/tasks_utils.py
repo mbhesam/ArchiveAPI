@@ -109,7 +109,7 @@ def update_db(name_page):
         search = {"attachments.name": name}
         update_files_inside = {
             "$set": {
-                f"attachments.{index}.files_inside": images[::-1]
+                f"attachments.{index}.files_inside": images
             }
         }
         update_thumbnail = {
