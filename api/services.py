@@ -117,7 +117,7 @@ def update_object(query,exact=False):
     docs = json.loads(json_util.dumps(dict_result))
     return docs
 
-def get_img_info(entity,collection,pdf_name):
+def get_img_info(entity,pdf_name):
     find = { 'identifier' : entity }
     doc = connection_string.find(find)
     option = {}
