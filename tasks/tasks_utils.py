@@ -1,4 +1,6 @@
 import os
+import shutil
+
 from PIL import Image
 from archiveAPI.settings import MONGO_DATA_COLLECTION_NAME,MONGO_CON_STR,MONGO_DB_NAME
 from pymongo import MongoClient
@@ -87,7 +89,7 @@ def create_pdf_img(path=None): # create pdf images and return count of pages
             pix = page.get_pixmap()
             pix.save(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-%i.jpeg" % page.number)
             if page.number == 0 :
-                os.rename(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-0.jpeg",f"{pdf}_files/{pdf_name.strip('.pdf')}_thumb.jpeg")
+                shutil.copyfile(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-0.jpeg",f"{pdf}_files/{pdf_name.strip('.pdf')}_thumb.jpeg")
             page_count = page_count + 1
         name_page[f'{pdf}'] = page_count
     return name_page
