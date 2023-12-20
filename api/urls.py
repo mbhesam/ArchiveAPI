@@ -1,5 +1,5 @@
 from django.urls import path ,include,re_path
-from api.views import ShowEntityCount,UpdateEntity ,ShowEntityJsonSearch ,DeleteEntityRangeDelete ,ShowEntityRangeSearch,DeleteEntityJsonDelete,CreateEntity,Bookreader
+from api.views import ShowEntityCount,UpdateEntity ,ShowEntityJsonSearch ,DeleteEntityRangeDelete ,ShowEntityRangeSearch,DeleteEntityJsonDelete,CreateEntity,Bookreader,ShowAttachmentsName
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -27,5 +27,6 @@ urlpatterns = [
     path('create_entity/_create',CreateEntity.as_view()),
     path('update_entity/_update',UpdateEntity.as_view()),
     path('bookreader/<str:collection>/<str:entity>/<str:pdf_name>',Bookreader.as_view()),
+    path('show_attachments/<str:collection>/<str:entity>/', ShowAttachmentsName.as_view()),
 ]
 

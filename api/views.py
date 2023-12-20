@@ -4,7 +4,7 @@ from rest_framework.parsers import MultiPartParser,FileUploadParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import action
-from api.services import delete_objects,update_object,count_objects,search_objects,search_range_objects,delete_range_objects,create_object,get_img_info
+from api.services import delete_objects,update_object,count_objects,search_objects,search_range_objects,delete_range_objects,create_object,get_img_info,search_attachments
 from api.serializers import JsonSearchSerializer, IdentifierRangeSerializer , UpdateSerializer
 from rest_framework import status
 from archiveAPI.settings import FILES_BASE_DIR
@@ -66,6 +66,14 @@ class ShowEntityRangeSearch(APIView):
         page = request.query_params.get("page")
         objects = search_range_objects(data_query.validated_data,page_number=page)
         return Response(objects,status.HTTP_200_OK)
+
+class ShowAttachmentsName(APIView):
+    @swagger_auto_schema()
+    def get(self,request,collection,entity):
+        result = search_attachments(collection=collection,entity=entity)
+        if result == None:
+            return Response("Object Not Found",status.HTTP_404_NOT_FOUND)
+        return Response(result,status.HTTP_200_OK)
 
 class DeleteEntityJsonDelete(APIView):
     exactmatch = openapi.Parameter('exactmatch', openapi.IN_QUERY,

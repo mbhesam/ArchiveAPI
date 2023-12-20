@@ -47,6 +47,16 @@ def convert_exact_to_regex_query(query):
                 list_innernew_query.append(innernew_query)
             new_query[key] = list_innernew_query
     return new_query
+def search_attachments(collection,entity):
+    query =  {"query": {"collections": collection, "identifier": entity}}
+    obj = dict(search_objects(query=query))
+    attachments_names = []
+    for attachment in obj['0']["attachments"]:
+        attachments_names.append(attachment["name"])
+    files = json.loads(json_util.dumps({"attachments": attachments_names}))
+    if files == []:
+        return None
+    return files
 
 def search_range_objects(query,page_number="1"):
     start_hexadecimal = query["identifier"]
