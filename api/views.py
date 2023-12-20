@@ -130,7 +130,7 @@ class Bookreader(APIView):
     def get(self,request,collection,entity,pdf_name):
         pdf_path = f"{FILES_BASE_DIR}/{collection}/{entity}/{pdf_name}"
         bookreader_api_call_task.delay(path=pdf_path)
-        result = get_img_info(entity=entity,collection=collection,pdf_name=pdf_name)
+        result = get_img_info(entity=entity,pdf_name=pdf_name)
         return Response(result,status.HTTP_200_OK)
 
 
