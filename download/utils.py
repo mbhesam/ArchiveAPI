@@ -1,6 +1,8 @@
 import zipfile
 import filetype
 from archiveAPI.settings import FILES_BASE_DIR
+import fitz
+import re
 
 def split_path(path):
     if path[-1] == '/':
@@ -50,3 +52,14 @@ def get_file_from_zip(zip_file, inner_file):
 def get_file_type(path: str):
     return filetype.guess(path)
 
+def create_single_image(image_path):
+    pdf_name = "/".join(image_path.split("/")[:-1]).removesuffix("_files")
+    page_number = int(re.search(r"(\d+).jpeg",image_path).group(1))
+    try:
+        doc = fitz.open(pdf_name)
+    except Exception as Ex:
+        print(f'LOGGER.error(msg=f"[{pdf_name}][{Ex}]")')
+    for page in doc:
+        if page.number == page_number:
+            pix = page.get_pixmap()
+            pix.save(f"{image_path}")
