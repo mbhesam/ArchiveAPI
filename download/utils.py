@@ -3,7 +3,7 @@ import filetype
 from archiveAPI.settings import FILES_BASE_DIR
 import fitz
 import re
-
+from archiveAPI.settings import BASE_DIR
 def split_path(path):
     if path[-1] == '/':
         path = path[:-1]
@@ -53,7 +53,7 @@ def get_file_type(path: str):
     return filetype.guess(path)
 
 def create_single_image(image_path):
-    pdf_name = "/".join(image_path.split("/")[:-1]).removesuffix("_files")
+    pdf_name = BASE_DIR + "/" + "/".join(image_path.split("/")[:-1]).removesuffix("_files")
     page_number = int(re.search(r"(\d+).jpeg",image_path).group(1))
     try:
         doc = fitz.open(pdf_name)
