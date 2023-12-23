@@ -1,6 +1,6 @@
 import zipfile
 import filetype
-from archiveAPI.settings import FILES_BASE_DIR
+from archiveAPI.settings import FILES_BASE_DIR,LOGGER
 import fitz
 import re
 def split_path(path):
@@ -57,8 +57,8 @@ def create_single_image(image_path):
     try:
         doc = fitz.open(pdf_name)
     except Exception as Ex:
-        print(f'LOGGER.error(msg=f"[{pdf_name}][{Ex}]")')
+        LOGGER.error(msg=f"[{pdf_name}][{Ex}]")
     for page in doc:
         if page.number == page_number:
             pix = page.get_pixmap()
-            pix.save(f"{image_path}")
+            pix.save(f"{FILES_BASE_DIR}/{image_path}")
