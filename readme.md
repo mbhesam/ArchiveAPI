@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/mbhesam/archiveAPI/blob/main/cover.png" width="200" />
+  <img src="https://github.com/mbhesam/archiveAPI/blob/main/cover.png" width="500" height="300" />
 </p>
 <p align="center">
     <h1 align="center">ARCHIVEAPI</h1>
