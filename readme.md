@@ -94,9 +94,9 @@
 
 | File                                                                                   | Summary                         |
 | ---                                                                                    | ---                             |
-| [.gitignore](https://github.com/mbhesam/archiveAPI/blob/master/.gitignore)             | <code>► INSERT-TEXT-HERE</code> |
-| [requirements.txt](https://github.com/mbhesam/archiveAPI/blob/master/requirements.txt) | <code>► INSERT-TEXT-HERE</code> |
-| [manage.py](https://github.com/mbhesam/archiveAPI/blob/master/manage.py)               | <code>► INSERT-TEXT-HERE</code> |
+| [.gitignore](https://github.com/mbhesam/archiveAPI/blob/master/.gitignore)             | <code>ignore files for git</code> |
+| [requirements.txt](https://github.com/mbhesam/archiveAPI/blob/master/requirements.txt) | <code>requirements packages for running project</code> |
+| [manage.py](https://github.com/mbhesam/archiveAPI/blob/master/manage.py)               | <code>core file for application</code> |
 
 </details>
 
@@ -104,14 +104,14 @@
 
 | File                                                                                   | Summary                         |
 | ---                                                                                    | ---                             |
-| [admin.py](https://github.com/mbhesam/archiveAPI/blob/master/api/admin.py)             | <code>► INSERT-TEXT-HERE</code> |
-| [views.py](https://github.com/mbhesam/archiveAPI/blob/master/api/views.py)             | <code>► INSERT-TEXT-HERE</code> |
-| [apps.py](https://github.com/mbhesam/archiveAPI/blob/master/api/apps.py)               | <code>► INSERT-TEXT-HERE</code> |
-| [tests.py](https://github.com/mbhesam/archiveAPI/blob/master/api/tests.py)             | <code>► INSERT-TEXT-HERE</code> |
-| [services.py](https://github.com/mbhesam/archiveAPI/blob/master/api/services.py)       | <code>► INSERT-TEXT-HERE</code> |
-| [models.py](https://github.com/mbhesam/archiveAPI/blob/master/api/models.py)           | <code>► INSERT-TEXT-HERE</code> |
-| [serializers.py](https://github.com/mbhesam/archiveAPI/blob/master/api/serializers.py) | <code>► INSERT-TEXT-HERE</code> |
-| [urls.py](https://github.com/mbhesam/archiveAPI/blob/master/api/urls.py)               | <code>► INSERT-TEXT-HERE</code> |
+| [admin.py](https://github.com/mbhesam/archiveAPI/blob/master/api/admin.py)             | <code>administrator panel of api</code> |
+| [views.py](https://github.com/mbhesam/archiveAPI/blob/master/api/views.py)             | <code>view functions</code> |
+| [apps.py](https://github.com/mbhesam/archiveAPI/blob/master/api/apps.py)               | <code>app file</code> |
+| [tests.py](https://github.com/mbhesam/archiveAPI/blob/master/api/tests.py)             | <code>code written for testing module</code> |
+| [services.py](https://github.com/mbhesam/archiveAPI/blob/master/api/services.py)       | <code>file for running query to database</code> |
+| [models.py](https://github.com/mbhesam/archiveAPI/blob/master/api/models.py)           | <code>database models</code> |
+| [serializers.py](https://github.com/mbhesam/archiveAPI/blob/master/api/serializers.py) | <code>serializer classes</code> |
+| [urls.py](https://github.com/mbhesam/archiveAPI/blob/master/api/urls.py)               | <code>url formats</code> |
 
 </details>
 
@@ -119,10 +119,10 @@
 
 | File                                                                                     | Summary                         |
 | ---                                                                                      | ---                             |
-| [tasks.py](https://github.com/mbhesam/archiveAPI/blob/master/tasks/tasks.py)             | <code>► INSERT-TEXT-HERE</code> |
-| [apps.py](https://github.com/mbhesam/archiveAPI/blob/master/tasks/apps.py)               | <code>► INSERT-TEXT-HERE</code> |
-| [tasks_utils.py](https://github.com/mbhesam/archiveAPI/blob/master/tasks/tasks_utils.py) | <code>► INSERT-TEXT-HERE</code> |
-| [celery.py](https://github.com/mbhesam/archiveAPI/blob/master/tasks/celery.py)           | <code>► INSERT-TEXT-HERE</code> |
+| [tasks.py](https://github.com/mbhesam/archiveAPI/blob/master/tasks/tasks.py)             | <code>async and priodic tasks</code> |
+| [apps.py](https://github.com/mbhesam/archiveAPI/blob/master/tasks/apps.py)               | <code>app file</code> |
+| [tasks_utils.py](https://github.com/mbhesam/archiveAPI/blob/master/tasks/tasks_utils.py) | <code>required fucntion for runnig tasks</code> |
+| [celery.py](https://github.com/mbhesam/archiveAPI/blob/master/tasks/celery.py)           | <code>celery configurations/code> |
 
 </details>
 
@@ -130,10 +130,10 @@
 
 | File                                                                                    | Summary                         |
 | ---                                                                                     | ---                             |
-| [asgi.py](https://github.com/mbhesam/archiveAPI/blob/master/archiveAPI/asgi.py)         | <code>► INSERT-TEXT-HERE</code> |
-| [wsgi.py](https://github.com/mbhesam/archiveAPI/blob/master/archiveAPI/wsgi.py)         | <code>► INSERT-TEXT-HERE</code> |
-| [settings.py](https://github.com/mbhesam/archiveAPI/blob/master/archiveAPI/settings.py) | <code>► INSERT-TEXT-HERE</code> |
-| [urls.py](https://github.com/mbhesam/archiveAPI/blob/master/archiveAPI/urls.py)         | <code>► INSERT-TEXT-HERE</code> |
+| [asgi.py](https://github.com/mbhesam/archiveAPI/blob/master/archiveAPI/asgi.py)         | <code></code> |
+| [wsgi.py](https://github.com/mbhesam/archiveAPI/blob/master/archiveAPI/wsgi.py)         | <code></code> |
+| [settings.py](https://github.com/mbhesam/archiveAPI/blob/master/archiveAPI/settings.py) | <code>basic settings and declerations</code> |
+| [urls.py](https://github.com/mbhesam/archiveAPI/blob/master/archiveAPI/urls.py)         | <code>base urls format</code> |
 
 </details>
 
@@ -141,11 +141,11 @@
 
 | File                                                                            | Summary                         |
 | ---                                                                             | ---                             |
-| [admin.py](https://github.com/mbhesam/archiveAPI/blob/master/download/admin.py) | <code>► INSERT-TEXT-HERE</code> |
-| [views.py](https://github.com/mbhesam/archiveAPI/blob/master/download/views.py) | <code>► INSERT-TEXT-HERE</code> |
-| [utils.py](https://github.com/mbhesam/archiveAPI/blob/master/download/utils.py) | <code>► INSERT-TEXT-HERE</code> |
-| [apps.py](https://github.com/mbhesam/archiveAPI/blob/master/download/apps.py)   | <code>► INSERT-TEXT-HERE</code> |
-| [urls.py](https://github.com/mbhesam/archiveAPI/blob/master/download/urls.py)   | <code>► INSERT-TEXT-HERE</code> |
+| [admin.py](https://github.com/mbhesam/archiveAPI/blob/master/download/admin.py) | <code>administrator panel</code> |
+| [views.py](https://github.com/mbhesam/archiveAPI/blob/master/download/views.py) | <code>view fucntions for download entities</code> |
+| [utils.py](https://github.com/mbhesam/archiveAPI/blob/master/download/utils.py) | <code>required fucntion</code> |
+| [apps.py](https://github.com/mbhesam/archiveAPI/blob/master/download/apps.py)   | <code>app file/code> |
+| [urls.py](https://github.com/mbhesam/archiveAPI/blob/master/download/urls.py)   | <code>url formats</code> |
 
 </details>
 
@@ -232,6 +232,6 @@ Once your PR is reviewed and approved, it will be merged into the main branch.
 
 ##  License
 
-This project is protected under the MIT (https://github.com/mbhesam/archiveAPI/blob/main/LICENSE) License. For more details, refer to the [LICENSE](https://github.com/mbhesam/archiveAPI/blob/main/LICENSE) file.
+This project is protected under the MIT License. For more details, refer to the [LICENSE](https://github.com/mbhesam/archiveAPI/blob/main/LICENSE) file.
 
 ---
