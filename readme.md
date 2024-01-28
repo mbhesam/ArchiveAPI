@@ -37,13 +37,19 @@
 
 ##  Overview
 
-<code>► INSERT-TEXT-HERE</code>
+<code>This API serves information about an archive of books, allowing users to create, delete, update, and search for books across different collections. It provides extensive functionality for backend applications that require access to archive information.</code>
 
 ---
 
 ##  Features
 
-<code>► INSERT-TEXT-HERE</code>
+<code>
+    Create: Add new books to the archive.
+    Delete: Remove specific books from the archive.
+    Count: Retrieve the total number of books in the archive.
+    Update: Modify existing book information.
+    Download: Access specific books for download.
+</code>
 
 ---
 
@@ -151,7 +157,7 @@
 
 Ensure you have the following dependencies installed on your system:
 
-* **Python**: `version x.y.z`
+* **Python**: `version 3.10`
 
 ###  Installation
 
@@ -167,7 +173,13 @@ git clone https://github.com/mbhesam/archiveAPI
 cd archiveAPI
 ```
 
-3. Install the dependencies:
+3. create virtual envirnoment and activate envirnoment:
+
+```sh
+python3.10 -m venv venv
+source venv/bin/activate
+```
+4. Install the dependencies:
 
 ```sh
 pip install -r requirements.txt
@@ -178,26 +190,8 @@ pip install -r requirements.txt
 Use the following command to run archiveAPI:
 
 ```sh
-python main.py
+python manage.py runserver
 ```
-
-###  Tests
-
-To execute tests, run:
-
-```sh
-pytest
-```
-
----
-
-##  Project Roadmap
-
-- [X] `► INSERT-TASK-1`
-- [ ] `► INSERT-TASK-2`
-- [ ] `► ...`
-
----
 
 ##  Contributing
 
@@ -238,14 +232,6 @@ Once your PR is reviewed and approved, it will be merged into the main branch.
 
 ##  License
 
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
-
----
-
-##  Acknowledgments
-
-- List any resources, contributors, inspiration, etc. here.
-
-[**Return**](#-quick-links)
+This project is protected under the MIT (https://github.com/mbhesam/archiveAPI/blob/main/LICENSE) License. For more details, refer to the [LICENSE](https://github.com/mbhesam/archiveAPI/blob/main/LICENSE) file.
 
 ---
