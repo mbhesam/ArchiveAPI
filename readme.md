@@ -5,7 +5,7 @@
     <h1 align="center">ARCHIVEAPI</h1>
 </p>
 <p align="center">
-    <em><code>► INSERT-TEXT-HERE</code></em>
+    <em><code>This API serves information about an archive of books</code></em>
 </p>
 <p align="center">
 	<!-- Shields.io badges not used with skill icons. --><p>
