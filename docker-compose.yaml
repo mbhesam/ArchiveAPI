@@ -1,0 +1,81 @@
+version: "3.9"
+
+services:
+
+  nginx:
+    build: nginx/
+    restart: always
+    volumes:
+      - ./uwsgi:/tmp/uwsgi/
+      - ./static:/var/www/archiveAPI/assets/:ro
+    ports:
+      - "8081:80"
+    depends_on:
+      - django
+      - celery
+
+  django:
+      build: .
+      restart: always
+      command: >
+        sh -c "python /code/manage.py collectstatic --noinput
+        && uwsgi --ini /code/archiveAPI.uwsgi.ini"
+      volumes:
+        - ./uwsgi:/tmp/uwsgi/
+        - ./static:/staticfiles/
+        - /archive:/archive
+        - ./:/code
+
+  celery:
+    restart: always
+    build:
+      context: .
+    command: celery -A tasks worker -l INFO
+    env_file:
+      - ./.env
+    depends_on:
+      - django
+    volumes:
+      - ./static:/staticfiles/
+      - /archive:/archive
+      - ./:/code
+
+  beat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: celery -A tasks beat -l INFO
+    restart: always
+    depends_on:
+      - celery
+      - django
+
+  rabbit1:
+    image: "rabbitmq:3-management"
+    hostname: "rabbit1"
+    restart: always
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq1"
+    volumes:
+      - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
+
+  mongodb_container:
+    image: mongo:4.4.6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: hesam
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+volumes:
+  mongodb_data_container:
