@@ -9,7 +9,7 @@ services:
       - ./uwsgi:/tmp/uwsgi/
       - ./static:/var/www/archiveAPI/assets/:ro
     ports:
-      - "8081:80"
+      - "3081:80"
     depends_on:
       - django
       - celery
@@ -54,14 +54,11 @@ services:
     image: "rabbitmq:3-management"
     hostname: "rabbit1"
     restart: always
-    environment:
-      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-      RABBITMQ_DEFAULT_USER: "rabbitmq"
-      RABBITMQ_DEFAULT_PASS: "rabbitmq"
-      RABBITMQ_DEFAULT_VHOST: "/"
+    env_file:
+      - ./.env
     ports:
-      - "15672:15672"
-      - "5672:5672"
+      - "35672:15672"
+      - "3672:5672"
     labels:
       NAME: "rabbitmq1"
     volumes:
@@ -69,11 +66,10 @@ services:
 
   mongodb_container:
     image: mongo:4.4.6
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: hesam
+    env_file:
+      - ./.env
     ports:
-      - 27017:27017
+      - 37017:27017
     volumes:
       - mongodb_data_container:/data/db
 
