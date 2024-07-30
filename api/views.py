@@ -69,8 +69,8 @@ class ShowEntityRangeSearch(APIView):
 
 class ShowAttachmentsName(APIView):
     @swagger_auto_schema()
-    def get(self,request,collection,entity):
-        result = search_attachments(collection=collection,entity=entity)
+    def get(self,request,entity):
+        result = search_attachments(entity=entity)
         if result == None:
             return Response("Object Not Found",status.HTTP_404_NOT_FOUND)
         return Response(result,status.HTTP_200_OK)
@@ -135,8 +135,8 @@ class UpdateEntity(APIView):
 
 class Bookreader(APIView):
     @swagger_auto_schema()
-    def get(self,request,collection,entity,pdf_name):
-        pdf_path = f"{FILES_BASE_DIR}/{collection}/{entity}/{pdf_name}"
+    def get(self,request,entity,pdf_name):
+        pdf_path = f"{FILES_BASE_DIR}/{entity}/{pdf_name}"
         bookreader_api_call_task.delay(path=pdf_path)
         result = get_img_info(entity=entity,pdf_name=pdf_name)
         return Response(result,status.HTTP_200_OK)

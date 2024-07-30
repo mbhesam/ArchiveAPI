@@ -26,7 +26,7 @@ urlpatterns = [
     path('delete_entity/range/_delete', DeleteEntityRangeDelete.as_view()),
     path('create_entity/_create',CreateEntity.as_view()),
     path('update_entity/_update',UpdateEntity.as_view()),
-    path('bookreader/<str:collection>/<str:entity>/<str:pdf_name>',Bookreader.as_view()),
-    path('show_attachments/<str:collection>/<str:entity>/', ShowAttachmentsName.as_view()),
+    path('bookreader/<str:entity>/<str:pdf_name>',Bookreader.as_view()),
+    path('show_attachments/<str:entity>/', ShowAttachmentsName.as_view()),
 ]
 

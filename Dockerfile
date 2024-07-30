@@ -6,5 +6,5 @@ RUN apt-get update && \
 WORKDIR /code
 COPY ./ /code
 RUN pip install  --default-timeout=1000 -r /code/requirements.txt
-
+RUN python /code/manage.py collectstatic --noinput
 CMD [ "uwsgi", "--ini", "/code/archiveAPI.uwsgi.ini" ]

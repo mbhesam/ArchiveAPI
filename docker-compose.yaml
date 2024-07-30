@@ -1,3 +1,4 @@
+
 version: "3.9"
 
 services:
@@ -7,7 +8,7 @@ services:
     restart: always
     volumes:
       - ./uwsgi:/tmp/uwsgi/
-      - ./static:/var/www/archiveAPI/assets/:ro
+      - ./staticfiles:/var/www/archiveAPI/assets/:ro
     ports:
       - "3081:80"
     depends_on:
@@ -17,12 +18,9 @@ services:
   django:
       build: .
       restart: always
-      command: >
-        sh -c "python /code/manage.py collectstatic --noinput
-        && uwsgi --ini /code/archiveAPI.uwsgi.ini"
       volumes:
         - ./uwsgi:/tmp/uwsgi/
-        - ./static:/staticfiles/
+        - ./staticfiles:/code/staticfiles/
         - /archive:/archive
         - ./:/code
 
@@ -36,7 +34,7 @@ services:
     depends_on:
       - django
     volumes:
-      - ./static:/staticfiles/
+      - ./staticfiles:/code/staticfiles/
       - /archive:/archive
       - ./:/code
 
@@ -61,8 +59,8 @@ services:
       - "3672:5672"
     labels:
       NAME: "rabbitmq1"
-    volumes:
-      - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
+#    volumes:
+#      - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
 
   mongodb_container:
     image: mongo:4.4.6

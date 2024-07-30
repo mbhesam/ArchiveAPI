@@ -47,8 +47,8 @@ def convert_exact_to_regex_query(query):
                 list_innernew_query.append(innernew_query)
             new_query[key] = list_innernew_query
     return new_query
-def search_attachments(collection,entity):
-    query =  {"query": {"collections": collection, "identifier": entity}}
+def search_attachments(entity):
+    query =  {"query": {"identifier": entity}}
     obj = dict(search_objects(query=query))
     attachments_names = []
     for attachment in obj['0']["attachments"]:
