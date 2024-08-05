@@ -49,7 +49,7 @@ services:
       - django
 
   rabbit1:
-    image: "rabbitmq:3-management"
+    image: "docker.arvancloud.ir/rabbitmq:3-management"
     hostname: "rabbit1"
     restart: always
     env_file:
@@ -63,7 +63,7 @@ services:
 #      - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
 
   mongodb_container:
-    image: mongo:4.4.6
+    image: docker.arvancloud.ir/mongo:4.4.6
     env_file:
       - ./.env
     ports:

@@ -1,4 +1,4 @@
-FROM nginx:latest
+FROM docker.arvancloud.ir/nginx:latest
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY archiveAPI.nginx.conf /etc/nginx/sites-available/archiveAPI.nginx.conf
 RUN mkdir /etc/nginx/sites-enabled

@@ -1,4 +1,4 @@
-FROM python:3.10.0
+FROM docker.arvancloud.ir/python:3.10.0
 RUN apt-get update && \
     apt-get install -y build-essential python vim net-tools && \
     pip install uwsgi

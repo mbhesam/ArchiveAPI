@@ -53,7 +53,7 @@ def get_file_type(path: str):
 
 def create_single_image(image_path):
     pdf_name = FILES_BASE_DIR + "/" + "/".join(image_path.split("/")[:-1]).removesuffix("_files")
-    page_number = int(re.search(r"(\d+).jpeg",image_path).group(1))
+    page_number = int(re.search(r"(\d+).webp",image_path).group(1))
     try:
         doc = fitz.open(pdf_name)
     except Exception as Ex:

@@ -1,12 +1,14 @@
 import os
 import shutil
 
+import pymupdf
 from PIL import Image
 from archiveAPI.settings import MONGO_DATA_COLLECTION_NAME,MONGO_CON_STR,MONGO_DB_NAME
 from pymongo import MongoClient
 import fitz
 from archiveAPI.settings import LOGGER
 import subprocess
+
 client = MongoClient(MONGO_CON_STR)
 mydb = client[MONGO_DB_NAME]
 connection_string = mydb[MONGO_DATA_COLLECTION_NAME]
@@ -32,7 +34,7 @@ def get_unimaged_pdf():
 
 
 def get_imaged_pdf():
-    output_os = subprocess.check_output(["find", "/archive","-name","*-page-12.jpeg"], text=True)
+    output_os = subprocess.check_output(["find", "/archive","-name","*-page-12.webp"], text=True)
     lines = output_os.split("\n")
     pdf_names_count = {}
     for line in lines[:-1]:
@@ -61,7 +63,7 @@ def delete_extra_image():
     for path , count in zip(full_path,page_counts):
         name = path.split("/")[-1]
         for page_number in range(11,count):
-            os.remove(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg")
+            os.remove(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.webp")
             LOGGER.info(f"[{full_path}][deleted pages 11 to end]")
 def create_image_dir(pdf):
     try:
@@ -86,10 +88,14 @@ def create_pdf_img(path=None): # create pdf images and return count of pages
         #iterate through the pages of the document and create a RGB image of the page
         page_count = 0
         for page in doc:
+            zoom_x = 1.5  # horizontal zoom
+            zoom_y = 1.5  # vertical zoom
+            mat = pymupdf.Matrix(zoom_x, zoom_y)  # zoom factor 1.5 in each dimension
             pix = page.get_pixmap()
-            pix.save(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-%i.jpeg" % page.number)
+#            pix.save(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-%i.jpeg" % page.number)
+            pix.pil_save(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-%i.webp" % page.number, optimize=True, dpi=(150, 150))
             if page.number == 0 :
-                shutil.copyfile(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-0.jpeg",f"{pdf}_files/{pdf_name.strip('.pdf')}_thumb.jpeg")
+                shutil.copyfile(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-0.webp",f"{pdf}_files/{pdf_name.strip('.pdf')}_thumb.webp")
             page_count = page_count + 1
         name_page[f'{pdf}'] = page_count
     return name_page
@@ -103,10 +109,10 @@ def update_db(name_page):
         all_page_number = page_counts[index]
         for page_number in range(all_page_number):
             image_object = {}
-            meta = get_image_meta(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg")
+            meta = get_image_meta(f"{path}_files/{name.strip('.pdf')}-page-{page_number}.webp")
             image_object["width"] = meta["width"]
             image_object["height"] = meta["height"]
-            image_object["local_address"] = f"{path}_files/{name.strip('.pdf')}-page-{page_number}.jpeg"
+            image_object["local_address"] = f"{path}_files/{name.strip('.pdf')}-page-{page_number}.webp"
             images.append(image_object)
         search = {"attachments.name": name}
         update_files_inside = {
@@ -116,7 +122,7 @@ def update_db(name_page):
         }
         update_thumbnail = {
             "$set": {
-                f"attachments.{index}.thumbnail": f"{path}_files/{name.strip('.pdf')}_thumb.jpeg"
+                f"attachments.{index}.thumbnail": f"{path}_files/{name.strip('.pdf')}_thumb.webp"
             }
         }
         update_pdf_page_count = {
