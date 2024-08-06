@@ -3,7 +3,7 @@ import shutil
 
 import pymupdf
 from PIL import Image
-from archiveAPI.settings import MONGO_DATA_COLLECTION_NAME,MONGO_CON_STR,MONGO_DB_NAME
+from archiveAPI.settings import MONGO_DATA_COLLECTION_NAME,MONGO_CON_STR,MONGO_DB_NAME, IMAGE_DPI
 from pymongo import MongoClient
 import fitz
 from archiveAPI.settings import LOGGER
@@ -93,7 +93,7 @@ def create_pdf_img(path=None): # create pdf images and return count of pages
             mat = pymupdf.Matrix(zoom_x, zoom_y)  # zoom factor 1.5 in each dimension
             pix = page.get_pixmap()
 #            pix.save(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-%i.jpeg" % page.number)
-            pix.pil_save(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-%i.webp" % page.number, optimize=True, dpi=(150, 150))
+            pix.pil_save(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-%i.webp" % page.number, optimize=True, dpi=(IMAGE_DPI, IMAGE_DPI))
             if page.number == 0 :
                 shutil.copyfile(f"{pdf}_files/{pdf_name.strip('.pdf')}-page-0.webp",f"{pdf}_files/{pdf_name.strip('.pdf')}_thumb.webp")
             page_count = page_count + 1

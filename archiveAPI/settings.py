@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import json
 from pathlib import Path
 import environ
 import os
@@ -152,3 +152,6 @@ FILES_BASE_DIR = env("FILES_BASE_DIR")
 ALLOWED_HOSTS=[env("ALLOWED_HOSTS")]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 CELERY_BROKER_URL = env("CELERY_BROKER_URL")
+IMAGE_DPI = env.int("IMAGE_DPI")
+SCHEDULE_CREATE_UPDATE_IMAGE = env("SCHEDULE_CREATE_UPDATE_IMAGE")
+SCHEDULE_DELETE_IMAGE = env("SCHEDULE_DELETE_IMAGE")

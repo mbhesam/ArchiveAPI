@@ -1,7 +1,6 @@
 import os
 from celery import Celery
-from celery.schedules import crontab
-from archiveAPI.settings import CELERY_BROKER_URL, INSTALLED_APPS
+from archiveAPI.settings import CELERY_BROKER_URL, INSTALLED_APPS, SCHEDULE_CREATE_UPDATE_IMAGE, SCHEDULE_DELETE_IMAGE
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'archiveAPI.settings')
 
@@ -11,13 +10,13 @@ app.autodiscover_tasks(INSTALLED_APPS)
 
 
 app.conf.beat_schedule = {
-    'run-task-every-hour': {
-        'task': 'tasks.tasks.scheduled_create_update_image',
-        'schedule': crontab(hour='1-23', minute='0', day_of_week='*'),
+    "task_create_update_image": {
+        "task": "tasks.tasks.scheduled_create_update_image",
+        "schedule": SCHEDULE_CREATE_UPDATE_IMAGE
     },
-    'run-task-every-day': {
-        'task': 'tasks.tasks.scheduled_delete_pdf_img',
-        'schedule': crontab(hour='1', minute='0', day_of_week='*'),
-    },
+    "task_delete_image": {
+        "task": "tasks.tasks.scheduled_delete_pdf_img",
+        "schedule": SCHEDULE_DELETE_IMAGE
+    }
 }
 

@@ -1,1 +1,1 @@
-it executed write <@task: tasks.tasks.bookreader_api_call_task of archiveAPI at 0x7fb0e842e050> in 2024-08-05 12:21:16.661852
+it executed write <@task: tasks.tasks.scheduled_create_update_image of archiveAPI at 0x7f6aa992f6a0> in 2024-08-06 11:32:39.380381
